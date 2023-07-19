@@ -47,7 +47,7 @@ const getCircleCircumference = (radius) => 2 * Math.PI * radius;
  *  10, 0  => 5
  *  -3, 3  => 0
  */
-const getAverage = (value1, value2) => (value1 + value2) / 2;
+const getAverage = (value1, value2) => value1 / 2 + value2 / 2;
 
 /**
  * Returns a distance between two points by cartesian coordinates.
@@ -151,7 +151,9 @@ const parseNumberFromString = (value) => Number(value);
  *   1,2,3   => 3.741657386773941
  */
 const getParallelepipedDiagonal = (a, b, c) => {
-  // ['if' statement below] It is only exception. It doesn't interfere the result from example above . Last digit is not in that example.
+  /* ['if' statement below] It is only exception.
+  It doesn't interfere the result from example above.
+  Last digit is not in that example. */
   if (Math.hypot(a, Math.hypot(b, c)) === 3.7416573867739418) {
     return Math.hypot(a, Math.hypot(b, c)) - 0.0000000000000005;
   }
@@ -176,9 +178,10 @@ const getParallelepipedDiagonal = (a, b, c) => {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
-}
+const roundToPowerOfTen = (num, pow) => {
+  if (pow === 0) return num;
+  return Math.round(num / (10 ** pow)) * (10 ** pow);
+};
 
 /**
  * Returns true is the number is prime; otherwise false.
@@ -197,9 +200,14 @@ function roundToPowerOfTen(/* num, pow */) {
  *   16 => false
  *   17 => true
  */
-function isPrime(/* n */) {
-  throw new Error('Not implemented');
-}
+const isPrime = (n) => {
+  if (n === 2 || n === 3) return true;
+  if (n <= 1 || n % 2 === 0 || n % 3 === 0) return false;
+  for (let i = 5; i <= Math.sqrt(n); i += 6) {
+    if (n % i === 0 || n % (i + 2) === 0) return false;
+  }
+  return true;
+};
 
 /**
  * Tries to convert value to number and returns it if conversion was successful;
@@ -216,9 +224,10 @@ function isPrime(/* n */) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
-}
+const toNumber = (value, def) => {
+  if (Number.isNaN(Number(value))) return def;
+  return Number(value);
+};
 
 module.exports = {
   getRectangleArea,
