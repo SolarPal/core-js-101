@@ -441,9 +441,23 @@ const getCommonDirectoryPath = (pathes) => {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
-}
+const getMatrixProduct = (m1, m2) => {
+  const m3 = [];
+  let m3c = [];
+  let acc = 0;
+  for (let i1 = 0; i1 < m1.length; i1 += 1) {
+    for (let i11 = 0; i11 < m2[i1].length; i11 += 1) {
+      for (let i2 = 0; i2 < m1[i1].length; i2 += 1) {
+        acc += m1[i1][i2] * m2[i2][i11];
+      }
+      m3c.push(acc);
+      acc = 0;
+    }
+    m3.push(m3c);
+    m3c = [];
+  }
+  return m3;
+};
 
 
 /**
@@ -476,9 +490,29 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-}
+const evaluateTicTacToePosition = (position) => {
+  // Horizontal lines:
+  for (let r = 0; r < position.length; r += 1) {
+    if (position[r][1] !== undefined
+        && position[r][1] === position[r][0]
+        && position[r][1] === position[r][2]) return position[r][1];
+  }
+  // Vertical lines:
+  for (let c = 0; c < position.length; c += 1) {
+    if (position[1][c] !== undefined
+        && position[1][c] === position[0][c]
+        && position[1][c] === position[2][c]) return position[1][c];
+  }
+  // Diagonal lines:
+  if (position[1][1] !== undefined
+      && position[1][1] === position[0][0]
+      && position[1][1] === position[2][2]) return position[1][1];
+  if (position[1][1] !== undefined
+      && position[1][1] === position[0][2]
+      && position[1][1] === position[2][0]) return position[1][1];
+  // Undefined:
+  return undefined;
+};
 
 
 module.exports = {
