@@ -402,13 +402,24 @@ const toNaryString = (num, n) => {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 const getCommonDirectoryPath = (pathes) => {
-  let arr = [];
+  let result = [];
+  let resultStr = '/';
   for (let i = 0; i < pathes.length; i += 1) {
-    arr.push(...pathes[i].split('/'));
+    if (pathes[i][0] !== '/') resultStr = '';
   }
-  arr = arr.filter((e, index, array) => array.indexOf(e) !== index);
-  if (arr.length < pathes.length) return '';
-  return `${arr.join('/')}/`;
+  const nPathes = pathes;
+  for (let p = 0; p < nPathes.length; p += 1) {
+    nPathes[p] = nPathes[p].split('/');
+    nPathes[p].splice(0, 1);
+  }
+  for (let i = 0; i < nPathes.length - 1; i += 1) {
+    result = nPathes[i].filter((element) => nPathes[i + 1].includes(element));
+  }
+  if (result.length === 0) return resultStr;
+  for (let i = 0; i < result.length; i += 1) {
+    resultStr += `${result[i]}/`;
+  }
+  return resultStr;
 };
 
 
